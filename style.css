@@ -422,7 +422,7 @@ footer[id] { scroll-margin-top: 96px; }
   color: var(--tangerine-deep);
   margin-bottom: 18px;
 }
-.price span { font-size: 0.85rem; color: var(--ink-soft); font-weight: 400; font-family: 'Plus Jakarta Sans'; }
+.price .price-unit { font-size: 0.85rem; color: var(--ink-soft); font-weight: 400; font-family: 'Plus Jakarta Sans'; }
 .price-note {
   text-align: center;
   margin-top: 32px;

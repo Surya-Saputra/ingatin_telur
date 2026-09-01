@@ -38,6 +38,31 @@ const highlightNav = () => {
 window.addEventListener('scroll', highlightNav);
 window.addEventListener('load', highlightNav);
 
+// Load current egg prices from prices.json and render them into the product cards
+fetch('prices.json', { cache: 'no-store' })
+  .then((res) => res.json())
+  .then((data) => {
+    (data.products || []).forEach((product) => {
+      const priceEl = document.querySelector(`[data-price-key="${product.key}"]`);
+      if (!priceEl) return;
+      const valueEl = priceEl.querySelector('.price-value');
+      const unitEl = priceEl.querySelector('.price-unit');
+      if (valueEl) valueEl.textContent = Number(product.price).toLocaleString('id-ID');
+      if (unitEl) unitEl.textContent = `/${product.unit}`;
+    });
+
+    const updatedAtEl = document.getElementById('priceUpdatedAt');
+    if (updatedAtEl && data.updatedAt) {
+      const formatted = new Date(data.updatedAt).toLocaleDateString('id-ID', {
+        day: 'numeric', month: 'long', year: 'numeric',
+      });
+      updatedAtEl.textContent = `Terakhir diperbarui: ${formatted}.`;
+    }
+  })
+  .catch(() => {
+    // If prices.json can't be loaded (e.g. opened as a local file), keep the static prices already in the HTML.
+  });
+
 // Reveal elements as they scroll into view
 const revealTargets = document.querySelectorAll('.reveal');
 const revealObserver = new IntersectionObserver(
